@@ -1,0 +1,24 @@
+{
+  "name": "basic-app",
+  "version": "0.0.0",
+  "description": "A simple basic app",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "docker:build": "docker build -t carlohcs/basic-app:latest .",
+    "docker:push": "docker push carlohcs/basic-app:latest",
+    "docker:run": "docker run -p 3000:3000 carlohcs/basic-app:latest",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "basic",
+    "basic-app",
+    "app",
+    "hello-world"
+  ],
+  "author": "Carlos Santana <carlohcs@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
