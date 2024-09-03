@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deployment-basic-app
+  namespace: default  # Avoid errors with ansible
 spec:
   selector:
     matchLabels:

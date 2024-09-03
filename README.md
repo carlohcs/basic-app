@@ -23,8 +23,16 @@ Access in the browser at `http://localhost:3000`.
 
 To run the Kubernetes application:
 
+For dev:
+
 ```bash
-kubectl apply -f k8s
+kubectl apply -f k8s/dev
+```
+
+For prod:
+
+```bash
+kubectl apply -f k8s/prod
 ```
 
 Access in the browser at `http://localhost:30001`.

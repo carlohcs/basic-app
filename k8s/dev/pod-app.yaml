@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-basic-app
+  namespace: default  # Avoid errors with ansible
   labels:
     name: pod-basic-app
 spec:
