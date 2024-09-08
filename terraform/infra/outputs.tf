@@ -2,12 +2,12 @@ output "APP_NAME" {
   value = kubernetes_service.basic_app_service.metadata[0].name
 }
 
-output "LOAD_BALANCER" {
-  value = data.kubernetes_service.basic_app_service_data.status[0].load_balancer[0]
+output "LOAD_BALANCER_HOSTNAME" {
+  value = data.kubernetes_service.basic_app_service_data.status[0].load_balancer[0].value.ingress[0].hostname
 }
 
-output "INGRESS" {
-  value = kubernetes_ingress_v1.basic_app_ingress
+output "INGRESS_PORT" {
+  value = kubernetes_ingress_v1.basic_app_ingress.spec[0].default_backend[0].service[0].port[0].number
 }
 
 # output "APP_IP" {

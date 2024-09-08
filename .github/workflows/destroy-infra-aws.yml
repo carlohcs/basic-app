@@ -35,4 +35,5 @@ jobs:
           -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
           -var="aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
           -var="aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
-          -var="aws_region=${{ secrets.AWS_REGION }}"
+          -var="aws_region=${{ secrets.AWS_REGION }}" \
+          -var="aws_bucket_name=${{ secrets.AWS_BUCKET_NAME }}"
