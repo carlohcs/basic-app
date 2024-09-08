@@ -1,3 +1,11 @@
+# We need to define the node_role_arn variable in the main.tf file again
+# because the module development is using the infra module and the node_role_arn variable is required.
+# At GitHub Actions
+variable "node_role_arn" {
+  description = "The ARN of the node role"
+  type        = string
+}
+
 module "development" {
   source = "../../infra"
 
