@@ -37,7 +37,7 @@ jobs:
       id: get_lb_dns
       run: |
         lb_dns=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].DNSName" --output text)
-        run: echo "lb_dns=$lb_dns" >> $GITHUB_OUTPUT
+        echo "lb_dns=${lb_dns}" >> $GITHUB_OUTPUT
       # DEPRECATED echo "::set-output name=lb_dns::$lb_dns"
 
     - name: Display All Load Balancer DNS Name
