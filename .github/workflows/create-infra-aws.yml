@@ -14,7 +14,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./terraform/env/dev
+        working-directory: terraform/env/dev
 
     steps:
 
