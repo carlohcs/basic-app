@@ -1,4 +1,4 @@
-name: "Create Infrastructure with AWS"
+name: Create Infrastructure with AWS
 
 on:
   workflow_dispatch:
@@ -34,9 +34,11 @@ jobs:
       run: terraform output -json
     
     - name: Display Application DNS
-      run: echo "Application URL: ${{ steps.output.outputs.APP_URL }}"
+      run: |
+        echo "Application URL: ${{ steps.output.outputs.APP_URL }}"
 
     - name: Display Application IP
-      run: echo "Application IP: ${{ steps.output.outputs.APP_IP }}"
+      run: |
+        echo "Application IP: ${{ steps.output.outputs.APP_IP }}"
 
 

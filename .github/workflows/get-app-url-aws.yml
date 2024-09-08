@@ -1,4 +1,4 @@
-name: "Get Application URL from AWS"
+name: Get Application URL from AWS
 
 on:
   workflow_dispatch:
@@ -34,4 +34,5 @@ jobs:
         echo "::set-output name=lb_dns::$lb_dns"
 
     - name: Display All Load Balancer DNS Name
-      run: echo "Load Balancer DNS Name: ${{ steps.get_lb_dns.outputs.lb_dns }}"
+      run: |
+        echo "Load Balancer DNS Name: ${{ steps.get_lb_dns.outputs.lb_dns }}"
