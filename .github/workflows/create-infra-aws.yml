@@ -17,6 +17,9 @@ jobs:
         working-directory: terraform/env/dev
 
     steps:
+    # We need this to work with our folders
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
