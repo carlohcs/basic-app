@@ -14,11 +14,17 @@ jobs:
 
     steps:
     
-    - name: Install AWS CLI
+    - name: Check if AWS CLI is installed
+      id: check_aws_cli
       run: |
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        sudo ./aws/install --update
+        if ! command -v aws &> /dev/null; then
+          echo "AWS CLI not found, installing..."
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --update
+        else
+          echo "AWS CLI is already installed"
+        fi
 
     - name: Configure AWS CLI
       run: |
