@@ -1,0 +1,42 @@
+name: "Create Infrastructure with AWS"
+
+on:
+  workflow_dispatch:
+
+jobs:  
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+
+    steps:
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init -upgrade
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      run: terraform plan -var "node_role_arn=${{secrets.NODE_ROLE_ARN}}"
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var "node_role_arn=${{secrets.NODE_ROLE_ARN}}"
+
+    - name: Terraform Output
+      id: output
+      run: terraform output -json
+    
+    - name: Display Application DNS
+      run: echo "Application URL: ${{ steps.output.outputs.APP_URL }}"
+
+    - name: Display Application IP
+      run: echo "Application IP: ${{ steps.output.outputs.APP_IP }}"
+
+
