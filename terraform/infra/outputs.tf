@@ -3,7 +3,7 @@ output "APP_NAME" {
 }
 
 output "LOAD_BALANCER_HOSTNAME" {
-  value = data.kubernetes_service.basic_app_service_data.status[0].load_balancer[0].value.ingress[0].hostname
+  value = data.kubernetes_service.basic_app_service_data.status[0].load_balancer[0].ingress[0].hostname
 }
 
 output "INGRESS_PORT" {
