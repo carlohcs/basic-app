@@ -57,7 +57,7 @@ variable "availability_zones" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "e2.micro"
+  default     = "t3.medium"
 }
 
 variable "ssh_key_name" {
