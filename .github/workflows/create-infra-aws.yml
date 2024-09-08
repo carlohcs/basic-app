@@ -34,9 +34,13 @@ jobs:
             echo "AWS CLI is already installed"
           fi
 
-      - name: Create S3 Bucket
+      - name: Create S3 Bucket if it does not exist
         run: |
-          aws s3api create-bucket --bucket ${{ secrets.AWS_BUCKET_NAME }} --region ${{ secrets.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
+          if aws s3api head-bucket --bucket "${{ secrets.AWS_BUCKET_NAME }}" 2>/dev/null; then
+            echo "Bucket already exists."
+          else
+            aws s3api create-bucket --bucket "${{ secrets.AWS_BUCKET_NAME }}" --region "${{ secrets.AWS_REGION }}"
+          fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
