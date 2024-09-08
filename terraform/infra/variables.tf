@@ -24,6 +24,12 @@ variable "aws_session_token" {
   type        = string
 }
 
+variable "aws_bucket_name" {
+  description = "The name of the S3 bucket"
+  type        = string
+  
+}
+
 variable "node_role_arn" {
   description = "ARN of the IAM Role that will be associated with the Node Group"
   type        = string
