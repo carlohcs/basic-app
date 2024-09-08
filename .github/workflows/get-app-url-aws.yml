@@ -1,4 +1,4 @@
-name: Get Application URL from AWS
+name: AWS - Get Application URL
 
 on:
   workflow_dispatch:
