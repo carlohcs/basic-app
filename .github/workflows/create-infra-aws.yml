@@ -60,6 +60,7 @@ jobs:
           -var="aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
           -var="aws_region=${{ secrets.AWS_REGION }}" \
           -var="aws_bucket_name=${{ secrets.AWS_BUCKET_NAME }}"
+          -var="image_version=latest"
 
       - name: Terraform Apply
         run: |
@@ -70,15 +71,17 @@ jobs:
           -var="aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
           -var="aws_region=${{ secrets.AWS_REGION }}" \
           -var="aws_bucket_name=${{ secrets.AWS_BUCKET_NAME }}"
+          -var="image_version=latest"
 
-      - name: Terraform Output
-        id: output
-        run: terraform output -json
+      # Is not working, need to fix
+      # - name: Terraform Output
+      #   id: output
+      #   run: terraform output -json
 
-      - name: Display Application DNS
-        run: |
-          echo "Application URL: ${{ steps.output.outputs.APP_URL }}"
+      # - name: Display Application DNS
+      #   run: |
+      #     echo "Application URL: ${{ steps.output.outputs.APP_URL }}"
 
-      - name: Display Application IP
-        run: |
-          echo "Application IP: ${{ steps.output.outputs.APP_IP }}"
+      # - name: Display Application IP
+      #   run: |
+      #     echo "Application IP: ${{ steps.output.outputs.APP_IP }}"

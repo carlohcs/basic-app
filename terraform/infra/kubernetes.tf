@@ -41,7 +41,7 @@ resource "kubernetes_deployment" "deployment_basic_app" {
 
         container {
           name  = "deployment-basic-app-container"
-          image = "carlohcs/basic-app"
+          image = "carlohcs/basic-app:${var.image_version}"
 
           resources {
             limits = {

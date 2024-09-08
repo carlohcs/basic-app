@@ -2,3 +2,4 @@ node_modules/
 *.zip
 .terraform
 .terraform.lock.hcl
+.DS_Store

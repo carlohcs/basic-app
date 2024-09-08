@@ -77,3 +77,9 @@ variable "ssh_key" {
   type        = string
   default     = "~/.ssh/aws-ec2-access"
 }
+
+variable "image_version" {
+  description = "The version of the image to deploy"
+  type        = string
+  default     = "latest"
+}
