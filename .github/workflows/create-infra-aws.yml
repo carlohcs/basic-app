@@ -15,7 +15,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/env/dev
+        working-directory: terraform/infra
 
     steps:
       # We need this to work with our folders
@@ -32,11 +32,19 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var "node_role_arn=${{secrets.NODE_ROLE_ARN}}"
+        run: terraform plan -var "node_role_arn=${NODE_ROLE_ARN}" \
+          -var "aws_access_key=${AWS_ACCESS_KEY_ID}" \
+          -var "aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+          -var "aws_session_token=${AWS_SESSION_TOKEN}" \
+          -var "aws_region=${AWS_REGION}"
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var "node_role_arn=${{secrets.NODE_ROLE_ARN}}"
-        #  -var "aws_access_key=${{secrets.AWS_ACCESS_KEY_ID}}" -var "aws_secret_key=${{secrets.AWS_SECRET_ACCESS_KEY}}" -var "aws_session_token=${{secrets.AWS_SESSION_TOKEN}}"
+        run: terraform plan -var "node_role_arn=${NODE_ROLE_ARN}" \
+          -var "aws_access_key=${AWS_ACCESS_KEY_ID}" \
+          -var "aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+          -var "aws_session_token=${AWS_SESSION_TOKEN}" \
+          -var "aws_region=${AWS_REGION}" \
+          -auto-approve
 
       - name: Terraform Output
         id: output

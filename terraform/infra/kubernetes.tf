@@ -127,11 +127,3 @@ data "kubernetes_service" "basic_app_service_data" {
     namespace = kubernetes_service.basic_app_service.metadata[0].namespace
   }
 }
-
-output "APP_IP" {
-  value = data.kubernetes_service.basic_app_service_data.status[0].load_balancer[0].ingress[0].ip
-}
-
-output "APP_URL" {
-  value = data.kubernetes_service.basic_app_service_data.status[0].load_balancer[0].ingress[0].hostname
-}

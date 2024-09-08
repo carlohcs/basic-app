@@ -1,8 +1,7 @@
-variable "aws_profile" {
-  description = "Profile from AWS"
-  type        = string
-  default     = "academy"
-}
+# variable "aws_profile" {
+#   description = "Profile from AWS"
+#   type        = string
+# }
 
 variable "aws_region" {
   description = "The AWS region where the resources will be provisioned"
@@ -13,19 +12,21 @@ variable "aws_region" {
 variable "aws_access_key" {
   description = "The AWS access key"
   type        = string
-  default     = "NOT_DEFINED"
 }
 
 variable "aws_secret_key" {
   description = "The AWS secret key"
   type        = string
-  default     = "NOT_DEFINED"
 }
 
 variable "aws_session_token" {
   description = "The AWS session token"
   type        = string
-  default     = "NOT_DEFINED"
+}
+
+variable "node_role_arn" {
+  description = "ARN of the IAM Role that will be associated with the Node Group"
+  type        = string
 }
 
 variable "environment" {
@@ -44,12 +45,7 @@ variable "kubernetes_namespace" {
 variable "cluster_name" {
   description = "Name of the EKS Cluster"
   type        = string
-}
-
-variable "node_role_arn" {
-  description = "ARN of the IAM Role that will be associated with the Node Group"
-  type        = string
-  default = "null"
+  default     = "basic-app-cluster"
 }
 
 variable "availability_zones" {
