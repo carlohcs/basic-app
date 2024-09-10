@@ -42,13 +42,31 @@ jobs:
           echo "lb_dns=${lb_dns}" >> $GITHUB_OUTPUT
         # DEPRECATED echo "::set-output name=lb_dns::$lb_dns"
 
-      - name: Get All Load Balancer Ports
-        id: get_lb_ports
-        run: |
-          lb_ports=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].AvailabilityZones[].LoadBalancerAddresses[].AllocationId" --output text)
-          echo "lb_ports=${lb_ports}" >> $GITHUB_OUTPUT
+      # Alternative to take all Load Balancer ARNs and Ports
+      # - name: Get All Load Balancer ARNs
+      #   id: get_lb_arns
+      #   run: |
+      #     lb_arns=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].LoadBalancerArn" --output text)
+      #     echo "lb_arns=${lb_arns}" >> $GITHUB_OUTPUT
+
+      # - name: Get Load Balancer Ports
+      #   id: get_lb_ports
+      #   run: |
+      #     lb_ports=""
+      #     for arn in ${{ steps.get_lb_arns.outputs.lb_arns }}; do
+      #       ports=$(aws elbv2 describe-listeners --load-balancer-arn $arn --query "Listeners[].Port" --output text)
+      #       lb_ports="$lb_ports $ports"
+      #     done
+      #     echo "lb_ports=${lb_ports}" >> $GITHUB_OUTPUT
+
+      # Doesn't work
+      # - name: Get All Load Balancer Ports
+      #   id: get_lb_ports
+      #   run: |
+      #     lb_ports=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].AvailabilityZones[].LoadBalancerAddresses[].AllocationId" --output text)
+      #     echo "lb_ports=${lb_ports}" >> $GITHUB_OUTPUT
 
       - name: Get full application information
         run: |
-          echo "Application full url: ${{ steps.get_lb_dns.outputs.lb_dns}}:${{ steps.get_lb_ports.outputs.lb_ports }}/?v=${{ github.sha }}"
-          echo "Check the version match at: ${{ steps.get_lb_dns.outputs.lb_dns}}:${{ steps.get_lb_ports.outputs.lb_ports }}/version?v=${{ github.sha }}"
+          echo "Application full url: ${{ steps.get_lb_dns.outputs.lb_dns}}:3000/?v=${{ github.sha }}"
+          echo "Check the version match at: ${{ steps.get_lb_dns.outputs.lb_dns}}:3000/version?v=${{ github.sha }}"
