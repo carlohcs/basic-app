@@ -14,6 +14,9 @@ jobs:
   build-docker-image:
     runs-on: ubuntu-latest
 
+    env:
+      BUILD_VERSION: ${{ github.sha }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -33,9 +36,11 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          build-args: |
+            APP_IMAGE_VERSION=${{ env.BUILD_VERSION }}
           platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
           push: true
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE }}:latest
           cache-to: type=inline
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE }}:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE }}:${{ env.BUILD_VERSION }}

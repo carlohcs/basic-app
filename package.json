@@ -5,6 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
+    "dev": "APP_IMAGE_VERSION=DEV_VERSION node src/server.js",
     "docker:build": "docker build -t carlohcs/basic-app:latest .",
     "docker:push": "docker push carlohcs/basic-app:latest",
     "docker:run": "docker run -p 3000:3000 carlohcs/basic-app:latest",

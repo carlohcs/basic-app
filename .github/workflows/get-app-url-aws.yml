@@ -1,7 +1,10 @@
 name: AWS - Get Application URL
 
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: ["Apply new version of the Application"]
+    types:
+      - completed
 
 jobs:
   aws:
@@ -13,33 +16,39 @@ jobs:
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
 
     steps:
-    
-    - name: Check if AWS CLI is installed
-      id: check_aws_cli
-      run: |
-        if ! command -v aws &> /dev/null; then
-          echo "AWS CLI not found, installing..."
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          unzip awscliv2.zip
-          sudo ./aws/install --update
-        else
-          echo "AWS CLI is already installed"
-        fi
+      - name: Check if AWS CLI is installed
+        id: check_aws_cli
+        run: |
+          if ! command -v aws &> /dev/null; then
+            echo "AWS CLI not found, installing..."
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install --update
+          else
+            echo "AWS CLI is already installed"
+          fi
 
-    - name: Configure AWS CLI
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
-        aws configure set region us-east-1
+      - name: Configure AWS CLI
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
+          aws configure set region us-east-1
 
-    - name: Get All Load Balancer DNS Name
-      id: get_lb_dns
-      run: |
-        lb_dns=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].DNSName" --output text)
-        echo "lb_dns=${lb_dns}" >> $GITHUB_OUTPUT
-      # DEPRECATED echo "::set-output name=lb_dns::$lb_dns"
+      - name: Get All Load Balancer DNS Name
+        id: get_lb_dns
+        run: |
+          lb_dns=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].DNSName" --output text)
+          echo "lb_dns=${lb_dns}" >> $GITHUB_OUTPUT
+        # DEPRECATED echo "::set-output name=lb_dns::$lb_dns"
 
-    - name: Display All Load Balancer DNS Name
-      run: |
-        echo "Load Balancer DNS Name: ${{ steps.get_lb_dns.outputs.lb_dns }}"
+      - name: Get All Load Balancer Ports
+        id: get_lb_ports
+        run: |
+          lb_ports=$(aws elbv2 describe-load-balancers --query "LoadBalancers[].AvailabilityZones[].LoadBalancerAddresses[].AllocationId" --output text)
+          echo "lb_ports=${lb_ports}" >> $GITHUB_OUTPUT
+
+      - name: Get full application information
+        run: |
+          echo "Application full url: ${{ steps.get_lb_dns.outputs.lb_dns}}:${{ steps.get_lb_ports.outputs.lb_ports }}/?v=${{ github.sha }}"
+          echo "Check the version match at: ${{ steps.get_lb_dns.outputs.lb_dns}}:${{ steps.get_lb_ports.outputs.lb_ports }}/version?v=${{ github.sha }}"
