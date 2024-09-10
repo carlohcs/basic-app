@@ -46,7 +46,7 @@ jobs:
           -var="aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
           -var="aws_region=${{ secrets.AWS_REGION }}" \
           -var="aws_bucket_name=${{ secrets.AWS_BUCKET_NAME }}" \
-          -var="image_version=${{ github.event.inputs.app_image_version || github.sha }} }}"
+          -var="image_version=${{ github.event.inputs.app_image_version || github.sha }}"
 
       - name: Terraform Apply
         run: |
@@ -57,4 +57,4 @@ jobs:
           -var="aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
           -var="aws_region=${{ secrets.AWS_REGION }}" \
           -var="aws_bucket_name=${{ secrets.AWS_BUCKET_NAME }}" \
-          -var="image_version=${{ github.event.inputs.app_image_version || github.sha }} }}"
+          -var="image_version=${{ github.event.inputs.app_image_version || github.sha }}"
