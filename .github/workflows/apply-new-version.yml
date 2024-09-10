@@ -38,7 +38,7 @@ jobs:
         run: terraform init -reconfigure
 
       - name: Terraform Plan with GitHub sha
-        if: ${{ github.event.inputs.app_image_version == 'github-sha' }}
+        if: ${{ github.event_name == 'push' }}
         run: |
           terraform plan \
           -var="node_role_arn=${{ secrets.NODE_ROLE_ARN }}" \
@@ -50,7 +50,7 @@ jobs:
           -var="image_version=${{ github.sha }}"
 
       - name: Terraform Plan with Provided Version
-        if: ${{ github.event.inputs.app_image_version != 'github-sha' }}
+        if: ${{ github.event_name != 'push' }}
         run: |
           terraform plan \
           -var="node_role_arn=${{ secrets.NODE_ROLE_ARN }}" \
