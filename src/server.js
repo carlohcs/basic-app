@@ -11,7 +11,11 @@ app.get("/", (req, res) => {
 app.get('/version', (_req, res) => {
   const version = process.env.APP_IMAGE_VERSION || 'NOT_DEFINED'
 
-  res.json({ version })
+  res.json({ version: `CURRENT VERSION: ${version}` })
+});
+
+app.get('/health', (_req, res) => {
+  res.json({ status: 'UP' })
 });
 
 app.listen(port, () => {
